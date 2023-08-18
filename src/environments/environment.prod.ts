@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  url:'https://kevinkuotest.ddns.net',
+  wsurl:'wss://kevinkuotest.ddns.net'
 };

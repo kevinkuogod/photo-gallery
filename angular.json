@@ -81,6 +81,9 @@
             },
             "ci": {
               "progress": false
+            },
+            "options":{
+              "disableHostCheck": true
             }
           },
           "defaultConfiguration": "development"
@@ -136,7 +139,8 @@
   "cli": {
     "schematicCollections": [
       "@ionic/angular-toolkit"
-    ]
+    ],
+    "analytics": "836d59f4-8eff-46b4-b10d-284403b022e0"
   },
   "schematics": {
     "@ionic/angular-toolkit:component": {

@@ -1,0 +1,53 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      login
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <!--
+    <select [ngModel]="selectedDevice" (ngModelChange)="onChange($event)">
+      <option value='Black'>Black</option>
+      <option value='Gray'>Gray</option>
+      <option value='White'>White</option>
+      <option value='Maroon'>Maroon</option>
+      <option value='Red'>Red</option>
+      <option value='Purple'>Purple</option>
+      <option value='Fuchsia'>Fuchsia</option>
+      <option value='Green'>Green</option>
+      <option value='Lime'>Lime</option>
+      <option value='Olive'>Olive</option>
+      <option value='Yellow'>Yellow</option>
+      <option value='Navy'>Navy</option>
+      <option value='Blue'>Blue</option>
+      <option value='Teal'>Teal</option>
+      <option value='Aqua'>Aqua</option>
+      <option value='pink'>pink</option>
+  </select>
+  -->
+
+    <form id="LLL" [formGroup]="loginFrom" action="/login" novalidate>
+      <ion-item>
+        <ion-input label="Email input" type="email" placeholder="email@domain.com" formControlName="Email"></ion-input>
+        <div *ngIf="loginFrom.controls['Email'].errors?.['required']">
+          帳號是必填欄位.
+        </div>
+      </ion-item>
+    
+      <ion-item>
+        <ion-input label="Password input" type="password" value="password" formControlName="Password"></ion-input>
+        <div *ngIf="loginFrom.controls['Password'].errors?.['required']">
+          密碼是必填欄位.
+      </div>
+      <div *ngIf="loginFrom.controls['Password'].errors?.['minlength']">
+          密碼長度是必填欄位.
+      </div>
+      </ion-item>
+    </form>
+
+    <ion-button expand="block" (click)="submit()">登入</ion-button>
+  </ion-list>
+</ion-content>
