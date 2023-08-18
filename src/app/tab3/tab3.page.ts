@@ -1,5 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { ConfigService, Login } from '../service/config.service';
 
 @Component({
@@ -14,12 +15,14 @@ export class Tab3Page {
   foodtype:string[] = ["豬肉","海鮮","牛肉","湯品","雞肉","甜品","主食"];
   constructor(private configService: ConfigService) {
     this.configService.getConfig("get",
-    "https://localhost:7237/Food/GetFood",
+    environment.url+"/Food/GetFood",
     new HttpParams())
       .subscribe((data: Login) =>  {
         console.log(data);
-        console.log(data.datas.result);
-        this.foodsTmp=data.datas.result;
+        //sqlserver
+        //console.log(data.datas.result);
+        //this.foodsTmp=data.datas.result;
+        this.foodsTmp=data.datas;
         for(let j=0;j<this.foodtype.length;j++){
           for(let i=0;i<this.foodsTmp.length;i++){
             if(this.foodtype[j] == this.foodsTmp[i].type){

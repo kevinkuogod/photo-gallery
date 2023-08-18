@@ -113,5 +113,6 @@ export interface Login {
   message: string;
   type: string;
   loginName: string;
-  datas: {result:[]};
+  //datas: {result:[]}; sqlserver
+  datas:[]
 }
