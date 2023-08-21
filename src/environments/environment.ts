@@ -6,8 +6,10 @@ export const environment = {
   production: false,
   /*url:'https://114.44.126.185',
   wsurl:'ws://114.44.126.185'*/
-  url:'https://localhost:7237',
-  wsurl:'wss://localhost:7237'
+  /*url:'https://localhost:7237',
+  wsurl:'wss://localhost:7237'*/
+  url:'https://kevinkuotest.ddns.net',
+  wsurl:'wss://kevinkuotest.ddns.net'
 };
 
 /*
