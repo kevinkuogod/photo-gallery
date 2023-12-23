@@ -8,8 +8,10 @@ export const environment = {
   wsurl:'ws://114.44.126.185'*/
   /*url:'https://localhost:7237',
   wsurl:'wss://localhost:7237'*/
-  url:'https://kevinkuotest.ddns.net',
-  wsurl:'wss://kevinkuotest.ddns.net'
+  /*url:'https://kevinkuotest.ddns.net',
+  wsurl:'wss://kevinkuotest.ddns.net'*/
+  url:'http://192.168.2.25:5237',
+  wsurl:'ws://192.168.2.25:5237'
 };
 
 /*

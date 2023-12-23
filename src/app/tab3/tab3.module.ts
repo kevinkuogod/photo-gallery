@@ -7,13 +7,17 @@ import { ExploreContainerComponentModule } from '../explore-container/explore-co
 
 import { Tab3PageRoutingModule } from './tab3-routing.module';
 
+import { QuillModule } from 'ngx-quill';
+import { QuillConfigModule } from 'ngx-quill/config';
+
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
-    Tab3PageRoutingModule
+    Tab3PageRoutingModule,
+    QuillModule.forRoot(),
   ],
   declarations: [Tab3Page]
 })

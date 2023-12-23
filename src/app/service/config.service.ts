@@ -12,7 +12,7 @@ export class ConfigService {
   }
 
   //term :string 要換object跑回圈
-   getConfig(requestType:string,configUrl:string,term: HttpParams) {
+   getConfig(requestType:string,configUrl:string,term: HttpParams,body: string="") {
     // Add safe, URL encoded search parameter if there is a search term
     //term = term.trim();
     //const options = term ?{ params: new HttpParams().set('Email', 'kevin123@gmail.com').set('Password', '123456') } : {};
@@ -25,11 +25,13 @@ export class ConfigService {
     };  
     
     const headers = new HttpHeaders({
-      //'Content-Type': 'application/json'
-      'Cache-Control':'no-cache',
+      //'Content-Type': 'application/json',
+      /*'Cache-Control':'no-cache',
       'Postman-Token':'<calculated when request is sent>',
       'Content-Type':'multipart/form-data; boundary=<calculated when request is sent>',
       'Host':'<calculated when request is sent>',
+      'Content-Length':'<calculated when request is sent>'*/
+
       //'credentials': 'include',
       //'withCredentials': 'true'
       //'Access-Control-Allow-Origin': '*',
@@ -38,11 +40,12 @@ export class ConfigService {
       //'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE'
     });
 
-    const body = {
+    /*const body = {
       'Email': 'kevin123@gmail.com',
       'Password': '123456'
     };
-    this.json['loginJson'] = JSON.stringify(body);
+    this.json['loginJson'] = JSON.stringify(body);*/
+
     //const params = new HttpParams().set('optionalParam', 'optionalValue');
 
     /*var paramsd:HttpParams = new HttpParams() 不給這樣用，會設定不到
@@ -66,7 +69,16 @@ export class ConfigService {
         catchError(this.handleError) // then handle the error
       ) 
     }else if(requestType == "post"){
-      return this.http.post<Login>(configUrl, body, { headers: headers, params: term }).pipe(
+
+      //return this.http.post<Login>(configUrl, JSON.stringify(body), { headers: headers, params: term}).pipe(
+        /*var buyJson:any = {};
+        buyJson["buyJson"] = "buyJson";
+        let body = JSON.stringify(buyJson);*/
+
+        const data = new FormData();
+        data.append("buyJson", body);
+        //, responseType:'json',observe:'body'
+        return this.http.post<Login>(configUrl, data, { headers: headers, params: term}).pipe(
         retry(3), // retry a failed request up to 3 times
         catchError(this.handleError) // then handle the error
       )
@@ -114,5 +126,5 @@ export interface Login {
   type: string;
   loginName: string;
   //datas: {result:[]}; sqlserver
-  datas:[]
+  data:[]
 }

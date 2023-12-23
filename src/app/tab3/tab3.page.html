@@ -1,48 +1,96 @@
 <ion-content class="ion-padding">
-<ion-button>送出餐點</ion-button>
+  <ion-button (click)="sendFoodItem()">送出餐點</ion-button>
+  <ion-button>最受注目商品(點閱數)</ion-button>
+  <ion-button>最佳銷售商品(銷售量)</ion-button>
+  <ion-button (click)="testFoodItem()">壓力測試</ion-button>
+  
+  <ion-button id="open-modal" slot="fixed" expand="block" (click)="setOpen(true)">點餐內容</ion-button>
+  <ion-modal  #modal trigger="open-modal">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Modal</ion-title>
+          <ion-buttons slot="end">
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-list>
+          <ion-item *ngFor="let element of buyItem ; index as i;">
+            <ion-label>{{element['name']}}</ion-label>
+            <ion-badge color="primary">{{element['number']}}</ion-badge>
+            <ion-button slot="end" size="default" (click)="userCutItem(element['id'],element['name'],element['foodTmpid'])"> - </ion-button>
+            <ion-button slot="end" size="default" (click)="setOpenDiet(true,element['remark'],element['foodTmpid'])">忌口</ion-button>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 
-<ion-button slot="fixed" expand="block" (click)="setOpen(true)">點餐內容</ion-button>
-<ion-modal [isOpen]="isModalOpen">
-  <ng-template>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Modal</ion-title>
-        <ion-buttons slot="end">
-          <ion-button (click)="setOpen(false)">Close</ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="ion-padding">
-      <ion-list>
-        <ion-item *ngFor="let element of buyItem ; index as i;">
-          <ion-label>{{element['name']}}</ion-label>
-          <ion-badge color="primary">{{element['number']}}</ion-badge>
+  <ion-modal  [isOpen]="isModalOpenComments">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Modal2</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="setOpenComments(false)">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-list>
+          <ion-item *ngFor="let element of buyItem ; index as i;">
+          </ion-item>
+        </ion-list>
+        <quill-editor #myQuillEditor></quill-editor>
+        <ion-button (click)="quillSubmit()">確認</ion-button>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+  <!-- 日後須因應菜色改變而作 -->
+  <ion-modal  [isOpen]="isModalOpenDiet">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>忌口選擇</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="setCloseDiet(false)">確認</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-item>
+          <ion-input label="需求:" value="{{remarkTmp!=''?remarkTmp+dietString:dietString}}"></ion-input>
         </ion-item>
-      </ion-list>
-    </ion-content>
-  </ng-template>
-</ion-modal>
+        <ion-chip (click)="setDiet('')">清空</ion-chip>
+        <ion-chip color="primary" (click)="setDiet('辣')">辣</ion-chip>
+        <ion-chip color="primary" (click)="setDiet('不辣')">不辣</ion-chip>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+  
+  <ion-item-group *ngFor="let element of foods ; index as i;">
+    <ion-item-divider *ngIf="checkType(element['type'])">
+      <ion-label>{{element['type']}}</ion-label>
+    </ion-item-divider>
+    <ion-item>
+      <ion-thumbnail slot="start">
+        <img (click)="setOpenComments(true)" alt="Silhouette of mountains" src="assets/food/{{element['imgSrc']}}" />
+      </ion-thumbnail>
+      <ion-label *ngIf="windowsType==0">{{element['name']}}</ion-label>
+      <ion-button slot="end" size="default" (click)="userAddItem(element['id'],element['name'],element['price'])"> + </ion-button>
+      <ion-badge color="secondary">數量:{{element['quantity']}}</ion-badge>
+      <ion-button id="present-alert{{element['id']}}">餐點介紹</ion-button>
+      <ion-button id="open-modal" slot="fixed" expand="block" (click)="setOpen(true)">點餐內容</ion-button>
+    </ion-item>
+    <ion-alert
+    trigger="present-alert{{element['id']}}"
+    header="食物介紹"
+    subHeader="{{element['name']}}"
+    message="{{element['content']}}"
+    [buttons]="alertButtons"
+  >
+</ion-alert>
+  </ion-item-group>
 
-<ion-item-group *ngFor="let element of foods ; index as i;">
-  <ion-item-divider *ngIf="checkType(element['type'])">
-    <ion-label>{{element['type']}}</ion-label>
-  </ion-item-divider>
-  <ion-item>
-    <ion-thumbnail slot="start">
-      <img alt="Silhouette of mountains" src="assets/food/{{element['imgSrc']}}" />
-    </ion-thumbnail>
-    <ion-label>{{element['name']}}</ion-label>
-    <ion-button slot="end" size="default" (click)="userAddItem(element['id'],element['name'])"> + </ion-button>
-    <ion-badge color="secondary">數量:{{element['quantity']}}</ion-badge>
-    <ion-button slot="end" size="default" (click)="userCutItem(element['id'],element['name'])"> - </ion-button>
-    <ion-button id="present-alert{{element['id']}}">餐點介紹</ion-button>
-  </ion-item>
-  <ion-alert
-  trigger="present-alert{{element['id']}}"
-  header="食物介紹"
-  subHeader="{{element['name']}}"
-  message="{{element['content']}}"
-  [buttons]="alertButtons"
-></ion-alert>
-</ion-item-group>
 </ion-content>

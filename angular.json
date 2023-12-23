@@ -74,10 +74,12 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "app:build:production"
+              "browserTarget": "app:build:production",
+              "disableHostCheck": true
             },
             "development": {
-              "browserTarget": "app:build:development"
+              "browserTarget": "app:build:development",
+              "disableHostCheck": true
             },
             "ci": {
               "progress": false
@@ -115,7 +117,7 @@
               }
             ],
             "styles": ["src/theme/variables.scss", "src/global.scss"],
-            "scripts": []
+            "scripts": ["./node_modules/quill/dist/quill.min.js"]
           },
           "configurations": {
             "ci": {
